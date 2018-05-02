@@ -1,10 +1,18 @@
-<%-- 
-    Document   : Booking
-    Created on : May 1, 2018, 10:48:32 AM
-    Author     : Abdii-isaa
---%>
-
+    <%
+        try{
+   String a=session.getAttribute("login").toString();
+   if(a.isEmpty()){
+     response.sendRedirect("login.jsp");  
+   }
+   else
+       response.sendRedirect("Booking.jsp");
+        }
+        catch(Exception e){
+            
+        }
+    %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -105,8 +113,8 @@
            <td width="300">
 			<select name="r" size="0" required>
 					  <option value="">---Select-room type---</option>
-					  <option value="Domestic">Class</option>
-					  <option value="Commercial">Lab</option>
+					  <option value="Class">Class</option>
+					  <option value="Lab">Lab</option>
 					  
 					 	  </select><font size="2">
 				</td></tr>

@@ -34,7 +34,7 @@ out.println(d);
             id=rs.getInt("ID");
             id+=1;
         }
-        
+        String st="8:00AM",et="6:00PM",s="Free";
 	 String v1=request.getParameter("o");
 	 String v2=request.getParameter("p");
          String v3=request.getParameter("q");
@@ -43,15 +43,17 @@ out.println(d);
 	 String r="RID/"+id+"/10";
 
 PreparedStatement pst=(PreparedStatement)con.prepareStatement("INSERT into room values(?,?,?,?,?)");
+PreparedStatement pst1=(PreparedStatement)con.prepareStatement("INSERT into rooms values(?,?,?,?,?)");
 pst.setString(1, v1);
 pst.setString(2, v2);
 pst.setString(3, v3);
 pst.setString(4, v4);
 pst.setString(5, r);
 pst.executeUpdate();
-PreparedStatement pst1=(PreparedStatement)con.prepareStatement("INSERT into value values(?)");
-pst1.setInt(1, id);
-pst1.executeUpdate();
+int i=id-1;
+String sql1="update value set ID="+"'"+id+"' where ID="+"'"+i+"'";
+        stmt.executeUpdate(sql1);
+        pst.setString(1, r);
 %>
 <%="data inserted" %>
 <% %>
