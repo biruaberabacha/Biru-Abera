@@ -3,7 +3,9 @@
     Created on : May 2, 2018, 9:01:15 AM
     Author     : Abdii-isaa
 --%>
-
+<%@page import="java.sql.*" %>
+<%@page import="java.lang.*" %>
+<%@page import="java.util.Date" %> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -104,12 +106,12 @@
     </head>
     <body>
         <div id="jh">
-        <form bgcolor="#99cccc" id="form1" name="form1" method="post" action="custreg.jsp" background-image=url("pho/13.jpg")>
+        <form bgcolor="#99cccc" id="form1" name="form1" method="post" action="request.jsp" background-image=url("pho/13.jpg")>
 	<i><h2>Fill the following Field With Correct Information!!!</h2></i> 
 		 <table bgcolor="khaki" width="550" cellspacing="" cellpadding="2px" height="100%">
 		
 		<tr><td align="right"><strong>Room ID:</strong></td><td>
-			<input style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;"type="text" name="h" id="h" required placeholder="Room ID" pattern="[A-Za-z ]{3,}"/></td>
+			<input style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;"type="text" name="h" id="h" required placeholder="Room ID" /></td>
 		</tr>
 		
 		<tr>
@@ -228,3 +230,43 @@ body{
     background-image: url("i/index.jpg");
 }
 </style>
+ <%if("POST".equalsIgnoreCase(request.getMethod())){
+         
+            String st=null;
+            if(request.getParameter("submit")!=null){
+              if(request.getParameter("submit")!="submit"){ 
+                  String RID=request.getParameter("h");
+                 st=request.getParameter("i");
+                String et=request.getParameter("j");
+                String CID=request.getParameter("k");
+                String Date=request.getParameter("l");
+         
+       
+                Connection con=null;
+               Statement stmt=null;
+               String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
+           
+              Class.forName("com.mysql.jdbc.Driver");
+	 con=DriverManager.getConnection(mysqlconnector,"root","");
+	 stmt=con.createStatement();
+          String sql,sql2;
+        
+        
+PreparedStatement pst=(PreparedStatement)con.prepareStatement("INSERT into request values(?,?,?,?,?)");
+pst.setString(1, RID);
+pst.setString(2, st);
+pst.setString(3, et);
+pst.setString(4, CID);
+pst.setString(5, Date);
+pst.executeUpdate();     
+       out.println("request sent and saved to database");
+        }
+        }}
+
+
+
+
+	 
+    
+       
+     %>   
