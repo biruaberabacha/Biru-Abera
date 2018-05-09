@@ -17,13 +17,18 @@
         <title>JSP Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Welcome</title>
-        <%
+            <% /*
        request.getSession(false);
        
-       String rrr=session.getAttribute("type").toString();
-       if(!rrr.equals("Teacher"))
+       String rrr=session.getAttribute("login").toString();
+       if(rrr.isEmpty())
            response.sendRedirect("login.jsp");
-       
+       else if(rrr.equals("Teacher"))
+       out.println("<h1>Welcome to Class Assigning Page </h1>");
+       else{
+       out.println("<script>alert('You are Admin this is  class Assigning page')</script>");
+        response.sendRedirect("Booking.jsp");
+       }*/
     %>
 
 	<!--sa calendar-->	
@@ -116,7 +121,7 @@
     </head>
     <body>
         <div id="jh">
-        <form bgcolor="#99cccc" id="form1" name="form1" method="post" action="request.jsp" background-image=url("pho/13.jpg")>
+        <form bgcolor="#99cccc" id="form1" name="form1" method="post" action="Cancelation.jsp" background-image=url("pho/13.jpg")>
 	<i><h2>Fill the following Field With Correct Information!!!</h2></i> 
 		 <table bgcolor="khaki" width="550" cellspacing="" cellpadding="2px" height="100%">
 		
@@ -241,7 +246,7 @@ body{
  <%if("POST".equalsIgnoreCase(request.getMethod())){
          SimpleDateFormat df = new SimpleDateFormat("HH:mm");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
-            String st=null;
+            String startTime=null;
             
  String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
 Connection con=null;
@@ -256,15 +261,15 @@ Date d=new Date();
               if(request.getParameter("submit")!="submit"){ 
                   
                   String RID=request.getParameter("h");
-                 st=request.getParameter("i");
-                String et=request.getParameter("j");
+                 startTime=request.getParameter("i");
+                String endTime=request.getParameter("j");
                 String CID=request.getParameter("k");
-                String Date=request.getParameter("l");
+                String Dates=request.getParameter("l");
                 session=request.getSession();
             String name_of_user=session.getAttribute("login").toString(); 
        int counter=0;
-       Date d1=df.parse(st);
-       Date d2=df.parse(et);
+       Date d1=df.parse(startTime);
+       Date d2=df.parse(endTime);
        if(d1.getTime()>=d2.getTime())
          out.println("<script>alert('Impossible Time selection!')</script>");
        else{
@@ -273,75 +278,23 @@ Date d=new Date();
           String sql,sql2;
           
         ResultSet rs;
-        int count=0;
-            sql2="select * from room_assign where Room_ID='"+RID+"' and Start_time='"+st+"' and End_time='"+et+"'and Status='"+"Occupied"+"'";
-            rs=stmt.executeQuery(sql2);
-            while(rs.next()){
-               count++; 
-            }
+       
+            
              if(!stmt.executeQuery("Select * from room where Room_ID='"+RID+"'").next())
                  out.println("<script>alert('Invalid room ID!')</script>");
                   else{
-                 if(Date.isEmpty())
+                 if(Dates.isEmpty())
                      out.println("<script>alert('DATE IS REQUIRED TO GET CLASS PLS FILL IT!')</script>");
                  else{
-        sql="select * from room_assign where Room_ID='"+RID+"' and Date='"+Date+"' order by Start_time";
-        rs=stmt.executeQuery(sql);
-        while(rs.next()){
-            String id=rs.getString("Room_ID");
-            String date=rs.getString("Date");
-           String startTime=rs.getString("Start_time");
-            String endTime=rs.getString("End_time");
-            String status=rs.getString("Status");
-             Date d4 = df.parse(startTime); //date 1
-             Date d5 = df.parse(endTime);
-           counter++;
-            if(count>0){
-               out.println("<script>alert('This class is reserved for other Teacher at this time!')</script>");
-                break;
-                        }
-            
-        
-              else if(d4.getTime()>d1.getTime() && d5.getTime()>d2.getTime()&& d4.getTime()<d2.getTime()&& status.equals("Occupied")){
-                 out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
-               break;
-            } else if(d4.getTime()<d1.getTime() && d5.getTime()>d2.getTime()&& status.equals("Occupied")){
-                 out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
-                 break;
-            }
-        else if(d4.getTime()>d1.getTime() && d5.getTime()==d2.getTime()&& status.equals("Occupied")){
-                out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
-               break;
-            }else if(d4.getTime()==d1.getTime() && d5.getTime()<d2.getTime()&& status.equals("Occupied")){
-                out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
-              break;
-            } else if(d4.getTime()==d1.getTime() && d5.getTime()>d2.getTime()&& status.equals("Occupied")){
-                out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
-                break;
-            } else if(d4.getTime()<d1.getTime() && d5.getTime()==d2.getTime()&& status.equals("Occupied")){
-                 out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
-                 break;
-            }else if(d4.getTime()<d1.getTime() && d5.getTime()<d2.getTime()&& d5.getTime()>d1.getTime()&& status.equals("Occupied")){
-                out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
-                 break;
-            }
-            else if(d4.getTime()<d1.getTime() && d5.getTime()>d2.getTime()&& d4.getTime()<d2.getTime()&& status.equals("Occupied")){
-                out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
-                            break;
-            } 
-            else if(d4.getTime()<d1.getTime()&& d5.getTime()<d2.getTime()){
-                counter--;// to decrease counter loop
-                
-               }
-                    else{              
+          sql="select * FROM `room_assign` WHERE Room_ID='"+RID+"' AND Date='"+Dates+"' AND Start_time='"+startTime+"' AND End_time='"+endTime+"' AND Status='Occupied'";
+       rs=stmt.executeQuery(sql);
+       if(stmt.execute(sql)){
            Registration register =new Registration();
-                register.room_assign(RID, Date, st, et, "Occupied",name_of_user);
-        out.println("This room is assigned for you')");
-            } 
+               register.canclel_assign(RID, Dates, startTime, endTime);
+        out.println("<script>alert('Room is canceled from assignment')</script>");
         }
-        if(counter==0){
-            Registration register =new Registration();
-                register.room_assign(RID, Date, st, et, "Occupied",name_of_user);
-        out.println("bnbnb bnbThis room is assigned for you')");
-            } }}}}}}
+       else
+           out.println("<script>alert('This room is not assigned before!')</script>");
+       
+             }}}}}}
      %>   

@@ -1,22 +1,147 @@
-<%-- 
-    Document   : custreg
-    Created on : May 1, 2018, 2:47:12 PM
-    Author     : Abdii-isaa
---%>
-
-<%@page import="javax.swing.JOptionPane"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <div id="im">
+<head>
+<style>
+ #menu{
+     background-image: url(images/download.jpg);
+ }
+div a {
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    padding: 15px;
+    display:inline-block;
+ 
+  margin-left: 50%;
+}
+ul {
+  display: inline;
+  margin: 0;
+  padding: 0;
+
+}
+ul li {display: inline-block;}
+ul li:hover {background: balck;}
+ul li:hover ul {display: block;}
+ul li ul {
+  position: absolute;
+  width: 200px;
+  display: none;
+}
+ul li ul li { 
+  background: #555; 
+  display: block; 
+}
+ul li ul li a {display:block !important;} 
+ul li ul li:hover {background:blue;}
+
+#box {
+  position: fixed;
+  
+   opacity: 1;
+   float: left;
+   padding: 50px 40px 20px 50px;
+  margin-top:0%;
+   background-image:url(index1.jpg);
+   border-radius: 2px;
+   transform: scale(1);
+   -webkit-transform: scale(1);
+   -ms-transform: scale(1);
+   z-index: 5;
+   margin-left: 72%
+   
+}
+
+
+
+#box2 {
+  position: relative;
+  
+   opacity: 1;
+   float: left;
+   padding: 50px 40px 20px 50px;
+  margin-top:-5%;
+   background-image:url(index1.jpg);
+   border-radius: 2px;
+   transform: scale(1);
+   -webkit-transform: scale(1);
+   -ms-transform: scale(1);
+   z-index: 5;
+   margin-right: 25%
+}
+
+#footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #155;
+   color: white;
+   
+   float:left;
+   background-image:url(.jpg);
+   font:blue;
+   font-size:20px;
+}
+</style>
+</head>
+<body style="background-image:url(background.png);width:100%;height:400%;Bborder:5px;">
+
+
+
+<div id="menu">
+  <a href="#">Useless Link</a>
+  <ul>
+    <li>
+      <a href="#">Dropdown Link</a>
+      <ul>
+        <li><a href="login.jsp">Login</a></li>
+        <li><a href="#">view</a></li>
+        <li><a href="#">Link 3</a></li>
+      </ul>
+    </li>
+  </ul>
+  
+    <ul>
+    <li>
+      <a href="#">Dropdown Link</a>
+      <ul>
+        <li><a href="#">Link 1</a></li>
+        <li><a href="#">Link 2</a></li>
+        <li><a href="#">Link 3</a></li>
+      </ul>
+    </li>
+  </ul>
+  
+    <ul>
+    <li>
+      <a href="#">Dropdown Link</a>
+      <ul>
+        <li><a href="#">Link 1</a></li>
+        <li><a href="#">Link 2</a></li>
+        <li><a href="#">Link 3</a></li>
+      </ul>
+    </li>
+  </ul>
+  
+    <ul>
+    <li>
+      <a href="#">Dropdown Link</a>
+      <ul>
+        <li><a href="#">Link 1</a></li>
+        <li><a href="#">Link 2</a></li>
+        <li><a href="#">Link 3</a></li>
+      </ul>
+    </li>
+  </ul>
+  
+   
+  
+</div>
+<div id="im">
             <h1>LOGIN PAGE</h1>
         <form action="login.jsp" method="post">
-            <table font-size="20">
+            <table font-size="20" style="backgroung-color:pink;">
                 <tr><td><h2>Username:</h2></td><td><input placeholder="Enter Email" required type="text" name="name" style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;"/></td></tr>
                 <tr><td align="right"><strong><h2>Customer Type:</h2></strong></td>
            <td width="300">
@@ -37,34 +162,38 @@
 <%@page import="java.util.Date" %>
         <%if("POST".equalsIgnoreCase(request.getMethod())){
          
-            String name=null;
+            String UserName=null;
             if(request.getParameter("sub")!=null){
               if(request.getParameter("sub")!="sub"){  
-                 name=request.getParameter("name");
+                 UserName=request.getParameter("name");
                 String pass=request.getParameter("pass");
                 String type=request.getParameter("d");
                 Connection con=null;
-               Statement stmt=null;
+               
                String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
            
               Class.forName("com.mysql.jdbc.Driver");
 	 con=DriverManager.getConnection(mysqlconnector,"root","");
-	 stmt=con.createStatement();
+	Statement stmt=null;
+        stmt=con.createStatement();
           String sql,sql2;
         
-        sql="select * from login where Email="+"'"+name+"'and CustType="+"'"+type+"' and Password='"+pass+"'";
+        sql="select * from login where Email="+"'"+UserName+"' and CustType="+"'"+type+"' and Password='"+pass+"'";
        
         ResultSet rs=stmt.executeQuery(sql);
         if(rs.next()){
             String ty=rs.getString("CustType");
+            String name1=rs.getString("NAME");
             if(ty.equals("Admin")){
             session=request.getSession();
-            session.setAttribute("login", name);
-            response.sendRedirect("Booking.jsp");
+            session.setAttribute("login", name1);
+            session.setAttribute("type", ty);
+            response.sendRedirect("Registration.jsp");
             }
             else{
                session=request.getSession();
-            session.setAttribute("login", name);
+            session.setAttribute("login", name1);
+            session.setAttribute("type", ty);
             response.sendRedirect("request.jsp");
             }
                 
@@ -72,9 +201,9 @@
         else{ 
               
             %>
-            <script>alert('please enter customers id number')</script>
+            <script>alert('Please enter correct user information!')</script>
             <%
-              response.sendRedirect("login.jsp");
+            
             }}
         }}
 
@@ -103,7 +232,8 @@ transform: scale(1);
 -webkit-transform: scale(1);
 -ms-transform: scale(1);
 z-index: 5;
-margin-left: 60%;
+background-image: url("images/u.png");
+background-color: #ff0099;
 }
 #ve
 {
@@ -128,4 +258,16 @@ body{
 #lo:checked{
     background-color: red;
 }
+table{
+    background-color: khaki;
+    
+}
 </style>
+
+        
+
+
+
+
+</body>
+</html>

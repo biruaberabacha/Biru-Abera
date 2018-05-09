@@ -12,51 +12,50 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <table border="1">
+        <h1>Class reserved for the Teacher is the following</h1>
+        <table border="1" style="background-color:#ff0099;color:white; font-size:15px; font-family:elephant;">
                 <tr><td>
                         Room ID
                     </td><td>
                         Date
                     </td><td>
-                        Start Time1
+                        Start Time
                     </td><td>
-                        End Time1
+                        End Time
                     </td><td>
-                        Status1
+                        Status
                     </td><td>
-                        Start Time2
-                    </td><td>
-                        End Time2
-                    </td><td>
-                        Status2
+                        Teacher Name
                     </td></tr>
         <%@page import="java.sql.*" %>
 <%@page import="java.lang.*" %>
 <%@page import="java.util.Date" %>
+<%@page import=" Woliso.Registration "%>
 <%
-String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
+    
+Registration r=new Registration();
+    String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
 Connection con=null;
 Statement stmt=null;
 String name=null;
-Date d=new Date();
-
+//Date d=new Date();
+//out.println(d);
 	 Class.forName("com.mysql.jdbc.Driver");
 	 con=DriverManager.getConnection(mysqlconnector,"root","");
 	 stmt=con.createStatement();
-    
         String sql;
         
-        sql="select * from rooms";
+        sql="select * from room_assign order by Start_time";
         ResultSet rs=stmt.executeQuery(sql);
         while(rs.next()){
-            String id=rs.getString("Room ID");
+            String id=rs.getString("Room_ID");
             String Date=rs.getString("Date");
-            String st=rs.getString("Start time1");
-            String et=rs.getString("End time1");
-            String st1=rs.getString("Start time2");
-            String et1=rs.getString("End time2");
-            String s=rs.getString("Status1");
-            String s1=rs.getString("Status2");
+            String st=rs.getString("Start_time");
+            String et=rs.getString("End_time");
+            
+            String s=rs.getString("Status");
+            String tn=rs.getString(6);
+            
             %>
                 <tr><td> 
                         <% out.print(id);%>
@@ -70,21 +69,25 @@ Date d=new Date();
                     </td>
                     <td> 
                         <% out.print(s);%>
-                    </td><td>
-                        <% out.print(st1);%>
-                        
-                    </td>
-                    <td> 
-                        <% out.print(et1);%>
-                    </td><td>
-                        <% out.print(s1);%>
-                    </td>
+                    </td><td> 
+                        <% out.print(tn);%>
+                    </td></td><td> 
+                        <% out.print("<a href='view.jsp'>edit</a>");%>
+                    </td></tr>
             
             <%
     
         }
      %>   
 </table>
-
+     <a href="back.jsp">Back</a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+<a href="logout.jsp"><button>logout</button></a>
     </body>
+    
 </html>
+<style>
+body{
+    background-color: khaki;
+            
+        }
+    </style>

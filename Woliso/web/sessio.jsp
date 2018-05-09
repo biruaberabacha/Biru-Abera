@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="false"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,14 +13,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%
-   session.getAttribute("login");
-   if(session!=null){
-       response.sendRedirect("request.jsp");
-   }
-   else
-       
-   response.sendRedirect("login.jsp");
-    %>
+  <img src="animate.gif"/>
+  <h1>
+      <meta http-equiv="refresh" content="2;url=index.html">
+      <h1>Logging Out........</h1>
     </body>
 </html>

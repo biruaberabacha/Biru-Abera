@@ -15,25 +15,12 @@
         <%@page import="java.sql.*" %>
 <%@page import="java.lang.*" %>
 <%@page import="java.util.Date" %>
+
+
 <%
-String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
-Connection con=null;
-Statement stmt=null;
-String name=null;
-Date d=new Date();
-out.println(d);
-	 Class.forName("com.mysql.jdbc.Driver");
-	 con=DriverManager.getConnection(mysqlconnector,"root","");
-	 stmt=con.createStatement();
-    
-        String sql;
-        int id=0;
-        sql="select * from value";
-        ResultSet rs=stmt.executeQuery(sql);
-        while(rs.next()){
-            id=rs.getInt("ID");
-            id+=1;
-        }
+    Registration r=new Registration();
+    r.register_customer();
+
         String st="8:00AM",et="6:00PM",s="Free";
 	 String v1=request.getParameter("o");
 	 String v2=request.getParameter("p");
