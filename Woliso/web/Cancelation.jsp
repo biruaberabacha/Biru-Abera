@@ -200,7 +200,7 @@
 		
 		<tr><td>
                 <tr><td></td>
-             <td align="right"><input type="submit" name="submit" value="Send Request" /> 
+             <td align="right"><input type="submit" name="submit" value="Cancel" /> 
               <td><input type="reset" name="cmdreset" value="Clear"/></td>
         </tr>
 				

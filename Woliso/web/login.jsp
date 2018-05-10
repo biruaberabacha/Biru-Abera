@@ -145,55 +145,59 @@ ul li ul li:hover {background:blue;}
                 <tr><td><h2>Username:</h2></td><td><input placeholder="Enter Email" required type="text" name="name" style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;"/></td></tr>
                 <tr><td align="right"><strong><h2>Customer Type:</h2></strong></td>
            <td width="300">
-			<select name="d" size="0" required style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;">
+			<select name="type" size="0" required style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;">
 					  <option value="">---Select type---</option>
 					  <option value="Admin">Admin</option>
 					  <option value="Teacher">Teacher</option>
 					  
 					 	  </select><font size="2">
 				</td></tr>
-                <tr><td><h2>password:</h2></td><td><input placeholder="Password" required type="password" name="pass"/ style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;"></td></tr>
+                <tr><td><h2>password:</h2></td><td><input placeholder="Password" required type="password" name="password"/ style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;"></td></tr>
             
-            <tr><td></td><td><input type="submit" name="sub" id="lo" value="Login"/></td></tr>
+            <tr><td></td><td><input type="submit" name="submit" id="lo" value="Login"/></td></tr>
       </table>  </form>
         </div>
         <%@page import="java.sql.*" %>
 <%@page import="java.lang.*" %>
 <%@page import="java.util.Date" %>
-        <%if("POST".equalsIgnoreCase(request.getMethod())){
+        <%if("POST".equalsIgnoreCase(request.getMethod())){//to check if button is clicked or not
          
             String UserName=null;
-            if(request.getParameter("sub")!=null){
-              if(request.getParameter("sub")!="sub"){  
+            if(request.getParameter("submit")!=null){//to check name of button is null or not
+              if(request.getParameter("submit")!="submit"){  //to check name of button is equal to given string or not
+                  //to recieve the values from textfields
                  UserName=request.getParameter("name");
-                String pass=request.getParameter("pass");
-                String type=request.getParameter("d");
+                String password=request.getParameter("password");
+                String type=request.getParameter("type");
                 Connection con=null;
                
-               String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
+               String mysqlconnector="jdbc:mysql://localhost:3306/woliso";// To Identify our server as well as name of database
            
-              Class.forName("com.mysql.jdbc.Driver");
-	 con=DriverManager.getConnection(mysqlconnector,"root","");
+              Class.forName("com.mysql.jdbc.Driver");//To start loadind driver
+	 con=DriverManager.getConnection(mysqlconnector,"root","");// to create connection with our databases
+         
 	Statement stmt=null;
         stmt=con.createStatement();
           String sql,sql2;
         
-        sql="select * from login where Email="+"'"+UserName+"' and CustType="+"'"+type+"' and Password='"+pass+"'";
+        sql="select * from login where Email="+"'"+UserName+"' and CustType="+"'"+type+"' and Password='"+password+"'";//creating sql statement to check if information is exist in database or not
        
-        ResultSet rs=stmt.executeQuery(sql);
-        if(rs.next()){
-            String ty=rs.getString("CustType");
-            String name1=rs.getString("NAME");
-            if(ty.equals("Admin")){
+        ResultSet result=stmt.executeQuery(sql);// To store the values of database to Result set variable
+        if(result.next()){//To fetch data from table
+            //to recieve the values from table and to check it
+            String CustType=result.getString("CustType");
+            
+            String name1=result.getString("NAME");
+            if(CustType.equals("Admin")){
             session=request.getSession();
             session.setAttribute("login", name1);
-            session.setAttribute("type", ty);
+            session.setAttribute("type", CustType);
             response.sendRedirect("Registration.jsp");
             }
             else{
                session=request.getSession();
             session.setAttribute("login", name1);
-            session.setAttribute("type", ty);
+            session.setAttribute("type", CustType);
             response.sendRedirect("request.jsp");
             }
                 

@@ -13,8 +13,8 @@
             <%
        request.getSession(false);
        
-       String rrr=session.getAttribute("type").toString();
-       if(!rrr.equals("Admin"))
+       String Type=session.getAttribute("type").toString();
+       if(!Type.equals("Admin"))
            response.sendRedirect("login.jsp");
        
     %>
@@ -29,7 +29,7 @@
 		 <table bgcolor="#99cccc" width="550" cellspacing="" cellpadding="2px" height="100%" >
 		
 		<tr><td align="right"><strong>Full Name:</strong></td><td>
-			<input type="text" name="FullName" id="a" required placeholder="Full name" pattern="[A-Za-z ]{3,}" style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;"/></td>
+			<input type="text" name="FullName" id="name" required placeholder="Full name" pattern="[A-Za-z ]{3,}" style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;"/></td>
 		</tr>
 		
 		<tr>
@@ -186,14 +186,14 @@ h6{
 }
 </style>
 
-<%if("POST".equalsIgnoreCase(request.getMethod())){
-      Registration r=new Registration();      
-            if(request.getParameter("submit")!=null){
-              if(request.getParameter("submit")!="submit"){
+<%if("POST".equalsIgnoreCase(request.getMethod())){//to check if button is clicked or not
+      Registration register=new Registration();      
+            if(request.getParameter("submit")!=null){//to check name of button is null or not
+              if(request.getParameter("submit")!="submit"){//to check name of button is equal to given string or not
              String mysqlconnector="jdbc:mysql://localhost:3306/woliso";//to assign the location of database
 Connection con=null;
 Statement stmt=null;
-int xx=0;
+int count=0,counter=0;
 	 Class.forName("com.mysql.jdbc.Driver");// to call driver to connect with database
 	 con=DriverManager.getConnection(mysqlconnector,"root","");// to connect with database
 	 stmt=con.createStatement();
@@ -207,15 +207,23 @@ int xx=0;
          String value7=request.getParameter("Password");
          
          String sql5="Select * from Customer where ID='"+value3+"'";// to search valus from table customer
-         ResultSet rs5=stmt.executeQuery(sql5);// to set results in the ResultSet
-         while(rs5.next()){// to get values from table
-               xx++;// to count how many values are fetched from the table
+         String sql6="Select * from Customer where Email='"+value6+"'";// to search valus from table customer
+         ResultSet result5=stmt.executeQuery(sql5);// to set results in the ResultSet
+         while(result5.next()){// to get values from table
+               count++;// to count how many values are fetched from the table
            }
-         if(xx>=1){//to check if vlaues are exist in database and if there is value in the table to send message for the user 
+         result5=stmt.executeQuery(sql6);
+          while(result5.next()){// to get values from table
+               counter++;// to count how many values are fetched from the table
+           }
+         if(count>=1){//to check if vlaues are exist in database and if there is value in the table to send message for the user 
              out.println("<script>alert('Customer of this ID number is Registered  before  this time')</script>");
          }
+         else if(counter>=1){
+             out.println("<script>alert('Customer of this Email ID is Registered  before  this time')</script>");
+         }
          else{
-r.register_customer(value1, value2, value3, value4, value5, value6,value7);// to call class to enter vlaue to database and send message for the user
+register.register_customer(value1, value2, value3, value4, value5, value6,value7);// to call class to enter vlaue to database and send message for the user
 out.println("<script>alert('Sent to database Successfully')</script>"); 
               }
               }}}
