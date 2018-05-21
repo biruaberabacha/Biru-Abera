@@ -1,6 +1,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*" %>
+<%@page import="java.sql.*"%>
 <%@page import="java.lang.*" %>
 <%@page import="java.util.Date" %>
 <%@page import="Woliso.Registration" %>
@@ -19,7 +19,22 @@
        
     %>
     <body>
-        <img src="images/bach.PNG" height="30%" width="100%"/>
+        <style>
+ 
+body{
+ background-image: url("images/class.PNG");
+}
+</style>
+</head>
+
+<body style="background-image:url(background.png);width:100%;height:400%;Bborder:5px;">
+    
+
+        <img src="images/ambo1.JPG" height="30%" width="100%"/><%
+   request.getSession(false);
+   String Adminname=session.getAttribute("login").toString();
+   out.println("WELCOME "+Adminname);
+%>
         <div id="nm">
 <fieldset margin-left="50%">
 <legend>Online Woliso campus Class Booking System Customer registration form </legend>
@@ -68,7 +83,7 @@
 			
 		
 		<tr><td><tr><td align="right"><strong>password:</strong></td><td>
-			<input type="text"  style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;" name="Password" id="g"required placeholder="len(8)<=Letter + Digits" pattern="[a-zA-Z0-9 ]{8,16}"/></td></td><td></td> </tr>
+			<input type="text"  style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;" name="Password" id="g"required placeholder="len(8)==Letter + Digits" pattern="[a-zA-Z0-9 ]{8,16}"/></td></td><td></td> </tr>
                 <tr><td></td>
              <td align="right"><input type="submit" name="submit" value="Register" /> 
               <td><input type="reset" name="cmdreset" value="Clear"/></td>
@@ -83,7 +98,8 @@
         </div>
         
 	<h6>Did you want to search assigned rooms?</h6> <a href="view.jsp"><button>Yes</button></a>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="logout.jsp"><button>No/logout</button></a>
- <div id="nu">
+ Cancel the Room Assignment<a href="Cancelation.jsp"><button>GO</button></a>
+        <div id="nu">
 <fieldset margin-left="50%">
 <legend>Online Woliso campus Class Booking System Room registration form </legend>
 
@@ -163,6 +179,7 @@ margin-left:0%;
 background-color:lightskyblue; 
 font-size:20px;
 margin-right:50%;
+margin-top: 7%;
 position: relative;
 }
 #nu
@@ -287,3 +304,25 @@ r.register_room(rr,value1, value2, value3, value4, dd, "2:00", "12:00","FREE",z,
            }}}}
 %>
     
+<link href="menu.css" rel=stylesheet>
+	<script language=JavaScript src="scripts/menu.js"></script>
+	<script language=JavaScript src="scripts/menu_hier.js"></script>
+	<script language="JavaScript" src = "scripts/myscript.js"></script>
+	<script language="JavaScript" type="text/javascript" 	src="scripts/sidebar.js"></script>
+        <div id="sd">
+<center>Woliso,Ethiopia </span><span class="style8"><br>
+    <strong>Po.Box :</strong>123<br>
+    <strong>Tel :</strong> +251 12367345 <br>
+    <strong>Fax :</strong> +251 12364588<br>
+    <strong>E-mail :</strong> classbooking@yahoo.com</span> </span></td><br><br>
+	Copyright &copy 2018 IT MSc 1<sup>st</sup>  year student Computing Solutions PLC. All Rights Reserved!! </span>
+	</center></div>
+<style>
+          #sd{
+     margin-top: 50%
+     
+            }
+            #sd{
+                background-color: khaki;
+            }  
+        </style>

@@ -5,6 +5,9 @@
  #menu{
      background-image: url(images/download.jpg);
  }
+ body{
+     background-image: url("images/class.PNG")
+ }
 div a {
     text-decoration: none;
     color: white;
@@ -42,7 +45,7 @@ ul li ul li:hover {background:blue;}
    float: left;
    padding: 50px 40px 20px 50px;
   margin-top:0%;
-   background-image:url(index1.jpg);
+  
    border-radius: 2px;
    transform: scale(1);
    -webkit-transform: scale(1);
@@ -51,7 +54,9 @@ ul li ul li:hover {background:blue;}
    margin-left: 72%
    
 }
-
+table{
+    background-color: pink;
+}
 
 
 #box2 {
@@ -85,64 +90,16 @@ ul li ul li:hover {background:blue;}
 }
 </style>
 </head>
-<body style="background-image:url(background.png);width:100%;height:400%;Bborder:5px;">
+<body>
+
+ <img src="images/ambo1.JPG"  width="100%"/>
 
 
-
-<div id="menu">
-  <a href="#">Useless Link</a>
-  <ul>
-    <li>
-      <a href="#">Dropdown Link</a>
-      <ul>
-        <li><a href="login.jsp">Login</a></li>
-        <li><a href="#">view</a></li>
-        <li><a href="#">Link 3</a></li>
-      </ul>
-    </li>
-  </ul>
-  
-    <ul>
-    <li>
-      <a href="#">Dropdown Link</a>
-      <ul>
-        <li><a href="#">Link 1</a></li>
-        <li><a href="#">Link 2</a></li>
-        <li><a href="#">Link 3</a></li>
-      </ul>
-    </li>
-  </ul>
-  
-    <ul>
-    <li>
-      <a href="#">Dropdown Link</a>
-      <ul>
-        <li><a href="#">Link 1</a></li>
-        <li><a href="#">Link 2</a></li>
-        <li><a href="#">Link 3</a></li>
-      </ul>
-    </li>
-  </ul>
-  
-    <ul>
-    <li>
-      <a href="#">Dropdown Link</a>
-      <ul>
-        <li><a href="#">Link 1</a></li>
-        <li><a href="#">Link 2</a></li>
-        <li><a href="#">Link 3</a></li>
-      </ul>
-    </li>
-  </ul>
-  
-   
-  
-</div>
 <div id="im">
             <h1>LOGIN PAGE</h1>
         <form action="login.jsp" method="post">
             <table font-size="20" style="backgroung-color:pink;">
-                <tr><td><h2>Username:</h2></td><td><input placeholder="Enter Email" required type="text" name="name" style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;"/></td></tr>
+                <tr><td><h2>Username:</h2></td><td><input placeholder="Email or phone" required type="text" name="name" style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;"/></td></tr>
                 <tr><td align="right"><strong><h2>Customer Type:</h2></strong></td>
            <td width="300">
 			<select name="type" size="0" required style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;">
@@ -154,9 +111,9 @@ ul li ul li:hover {background:blue;}
 				</td></tr>
                 <tr><td><h2>password:</h2></td><td><input placeholder="Password" required type="password" name="password"/ style="width: 165px; margin-left: 15px; border: 3px double #CCCCCC; padding:5px 10px;"></td></tr>
             
-            <tr><td></td><td><input type="submit" name="submit" id="lo" value="Login"/></td></tr>
+                <tr><td></td><td><input type="submit" name="submit" id="lo" value="Login"/></td></tr>
       </table>  </form>
-        </div>
+        <a href="changePassword.jsp"><button>Change Password</button></a></div>
         <%@page import="java.sql.*" %>
 <%@page import="java.lang.*" %>
 <%@page import="java.util.Date" %>
@@ -180,7 +137,7 @@ ul li ul li:hover {background:blue;}
         stmt=con.createStatement();
           String sql,sql2;
         
-        sql="select * from login where Email="+"'"+UserName+"' and CustType="+"'"+type+"' and Password='"+password+"'";//creating sql statement to check if information is exist in database or not
+        sql="select * from login where Phone="+"'"+UserName+"' or Email="+"'"+UserName+"' and CustType="+"'"+type+"' and Password='"+password+"'";//creating sql statement to check if information is exist in database or not
        
         ResultSet result=stmt.executeQuery(sql);// To store the values of database to Result set variable
         if(result.next()){//To fetch data from table
@@ -192,13 +149,13 @@ ul li ul li:hover {background:blue;}
             session=request.getSession();
             session.setAttribute("login", name1);
             session.setAttribute("type", CustType);
-            response.sendRedirect("Registration.jsp");
+            response.sendRedirect("adminlogin.jsp");
             }
             else{
                session=request.getSession();
             session.setAttribute("login", name1);
             session.setAttribute("type", CustType);
-            response.sendRedirect("request.jsp");
+            response.sendRedirect("custlogin.jsp");
             }
                 
         }
@@ -226,18 +183,18 @@ ul li ul li:hover {background:blue;}
 #im
 {
 position:relative;
-margin-top: 2%;
+margin-top: 0%;
 opacity:1;
 float:left;
 padding:50px 40px 20px 50px;
-background: #fff;
+
 border-radius: 2px;
 transform: scale(1);
 -webkit-transform: scale(1);
 -ms-transform: scale(1);
 z-index: 5;
-background-image: url("images/u.png");
-background-color: #ff0099;
+margin-left: 30%;
+
 }
 #ve
 {
@@ -253,7 +210,7 @@ margin-top:-20%;
    background: white; 
 }
 body{
-    background-image: url("i/index.jpg");
+    background-image: url("images/class.PNG");
 }
 #lo:hover{
     font-size: 100%;
@@ -266,12 +223,35 @@ table{
     background-color: khaki;
     
 }
+h1{
+    color: white;
+}
 </style>
 
         
 
 
-
-
+<div id="sd">
+<center>Woliso,Ethiopia </span><span class="style8"><br>
+    <strong>Po.Box :</strong>123<br>
+    <strong>Tel :</strong> +251 12367345 <br>
+    <strong>Fax :</strong> +251 12364588<br>
+    <strong>E-mail :</strong> classbooking@yahoo.com</span> </span></td><br><br>
+	Copyright &copy 2018 IT MSc 1<sup>st</sup>  year student Computing Solutions PLC. All Rights Reserved!! </span>
+	</center></div>
+<style>
+          #sd{
+     margin-top: 50%
+     
+            }
+            #sd{
+                background-color: khaki;
+            }  
+        </style>
 </body>
+<link href="menu.css" rel=stylesheet>
+	<script language=JavaScript src="scripts/menu.js"></script>
+	<script language=JavaScript src="scripts/menu_hier.js"></script>
+	<script language="JavaScript" src = "scripts/myscript.js"></script>
+	<script language="JavaScript" type="text/javascript" 	src="scripts/sidebar.js"></script>
 </html>

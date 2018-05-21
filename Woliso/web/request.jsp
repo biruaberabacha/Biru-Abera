@@ -115,9 +115,20 @@
 </head>
     </head>
     <body>
+        <img src="images/ambo.PNG"  width="100%"/><%
+   request.getSession(false);
+   String Adminname=session.getAttribute("login").toString();
+   out.println("<h1>WELCOME "+Adminname+"</h1>");
+%>
+<style>
+    h1{
+        margin-top: 5%;
+        color: khaki;
+    }
+</style>
         <div id="jh">
         <form bgcolor="#99cccc" id="form1" name="form1" method="post" action="request.jsp" background-image=url("pho/13.jpg")>
-	<i><h2>Fill the following Field With Correct Information!!!</h2></i> 
+	<i><h2>Fill the following Field With Correct Information to request class!!!</h2></i> 
 		 <table bgcolor="khaki" width="550" cellspacing="" cellpadding="2px" height="100%">
 		
 		<tr><td align="right"><strong>Room ID:</strong></td><td>
@@ -206,8 +217,74 @@
 	</table></form>
             
         </div><div id="ve">
-            <h1>Please check if the class is free or not!!</h1>
-            <a href="view.jsp"><button>view</button></a></div>
+             <h2>Class reserved for the Teacher is the following</h2>
+        <table border="1" style="background-color:#ff0099;color:white; font-size:15px; font-family:elephant;">
+                <tr><td>
+                        Room ID
+                    </td><td>
+                        Date
+                    </td><td>
+                        Start Time
+                    </td><td>
+                        End Time
+                    </td><td>
+                        Status
+                    </td><td>
+                        Teacher Name
+                    </td></tr>
+        <%@page import="java.sql.*" %>
+<%@page import="java.lang.*" %>
+<%@page import="java.util.Date" %>
+<%@page import=" Woliso.Registration "%>
+<%
+    
+Registration r=new Registration();
+    String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
+Connection con=null;
+Statement stmt=null;
+String name=null;
+//Date d=new Date();
+//out.println(d);
+	 Class.forName("com.mysql.jdbc.Driver");
+	 con=DriverManager.getConnection(mysqlconnector,"root","");
+	 stmt=con.createStatement();
+        String sql;
+        
+        sql="select * from room_assign order by Start_time";
+        ResultSet rs=stmt.executeQuery(sql);
+        while(rs.next()){
+            String id=rs.getString("Room_ID");
+            String Date=rs.getString("Date");
+            String st=rs.getString("Start_time");
+            String et=rs.getString("End_time");
+            
+            String s=rs.getString("Status");
+            String tn=rs.getString(6);
+            
+            %>
+                <tr><td> 
+                        <% out.print(id);%>
+                    </td><td>
+                        <% out.print(Date);%>
+                    </td>
+                    <td> 
+                        <% out.print(st);%>
+                    </td><td>
+                        <% out.print(et);%>
+                    </td>
+                    <td> 
+                        <% out.print(s);%>
+                    </td><td> 
+                        <% out.print(tn);%>
+                    </td></tr>
+            
+            <%
+    
+        }
+     %>   
+</table>
+   
+<a href="logout.jsp"><button>logout</button></a></div>
  
           
     </body>
@@ -215,38 +292,44 @@
 <style> 
 #jh
 {
+    position: relative;
 margin-left:50%; 
 background-color:lightskyblue; 
 font-size:20px;
 margin-right:0%;
+margin-top: 4%;
 
+}
+img{
+            height: 0%;
 }
 #ve
 {
+   position: relative;
 margin-left:0%; 
-background-color:pink; 
+background-color:khaki; 
 font-size:20px;
 margin-right:50%;
-margin-top:-20%;
+margin-top:-22%;
 
 
+}
+h2{
+    color: blue;
 }
 #wow{
    background: white; 
 }
 body{
-    background-image: url("i/index.jpg");
+    background-image: url("images/class.PNG");
 }
 </style>
  <%if("POST".equalsIgnoreCase(request.getMethod())){
          SimpleDateFormat df = new SimpleDateFormat("HH:mm");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
             String st=null;
-            
- String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
-Connection con=null;
-Statement stmt=null;
-String name=null;
+ 
+
 Date d=new Date();
 
 	 Class.forName("com.mysql.jdbc.Driver");
@@ -270,9 +353,9 @@ Date d=new Date();
        else{
            
           stmt=con.createStatement();
-          String sql,sql2;
+          String sql2;
           
-        ResultSet rs;
+       
         int count=0;
             sql2="select * from room_assign where Room_ID='"+RID+"' and Start_time='"+st+"' and End_time='"+et+"'and Status='"+"Occupied"+"'";
             rs=stmt.executeQuery(sql2);
@@ -297,36 +380,36 @@ Date d=new Date();
              Date d5 = df.parse(endTime);
            counter++;
             if(count>0){
-               out.println("<script>alert('This class is reserved for other Teacher at this time!')</script>");
+               out.println("<script>alert('This class is reserved for other Teacher at same time!')</script>");
                 break;
                         }
             
         
               else if(d4.getTime()>d1.getTime() && d5.getTime()>d2.getTime()&& d4.getTime()<d2.getTime()&& status.equals("Occupied")){
-                 out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
+                 out.println("<script>alert('Time is overlapeed with other class time of the same room')</script>");
                break;
             } else if(d4.getTime()<d1.getTime() && d5.getTime()>d2.getTime()&& status.equals("Occupied")){
-                 out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
+                 out.println("<script>alert('Time is overlapeed with other class time of the same room')</script>");
                  break;
             }
         else if(d4.getTime()>d1.getTime() && d5.getTime()==d2.getTime()&& status.equals("Occupied")){
-                out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
+                out.println("<script>alert('Time is overlapeed with other class time of the same room')</script>");
                break;
             }else if(d4.getTime()==d1.getTime() && d5.getTime()<d2.getTime()&& status.equals("Occupied")){
-                out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
+                out.println("<script>alert('Time is overlapeed with other class time of the same room')</script>");
               break;
             } else if(d4.getTime()==d1.getTime() && d5.getTime()>d2.getTime()&& status.equals("Occupied")){
-                out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
+                out.println("<script>alert('Time is overlapeed with other class time of the same room')</script>");
                 break;
             } else if(d4.getTime()<d1.getTime() && d5.getTime()==d2.getTime()&& status.equals("Occupied")){
-                 out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
+                 out.println("<script>alert('Time is overlapeed with other class time of the same room')</script>");
                  break;
             }else if(d4.getTime()<d1.getTime() && d5.getTime()<d2.getTime()&& d5.getTime()>d1.getTime()&& status.equals("Occupied")){
-                out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
+                out.println("<script>alert('Time is overlapeed with other class time of the same room')</script>");
                  break;
             }
             else if(d4.getTime()<d1.getTime() && d5.getTime()>d2.getTime()&& d4.getTime()<d2.getTime()&& status.equals("Occupied")){
-                out.println("<script>alert('Time is overlapeed with other class time of the same room 1')</script>");
+                out.println("<script>alert('Time is overlapeed with other class time of the same room')</script>");
                             break;
             } 
             else if(d4.getTime()<d1.getTime()&& d5.getTime()<d2.getTime()){
@@ -342,6 +425,28 @@ Date d=new Date();
         if(counter==0){
             Registration register =new Registration();
                 register.room_assign(RID, Date, st, et, "Occupied",name_of_user);
-        out.println("bnbnb bnbThis room is assigned for you')");
+        out.println("<h1>This room is assigned for you. If you don't use it,please inform if for admin!!</h1>");
             } }}}}}}
      %>   
+     <link href="menu.css" rel=stylesheet>
+	<script language=JavaScript src="scripts/menu.js"></script>
+	<script language=JavaScript src="scripts/menu_hier.js"></script>
+	<script language="JavaScript" src = "scripts/myscript.js"></script>
+	<script language="JavaScript" type="text/javascript" 	src="scripts/sidebar.js"></script>
+        <div id="sd">
+<center>Woliso,Ethiopia </span><span class="style8"><br>
+    <strong>Po.Box :</strong>123<br>
+    <strong>Tel :</strong> +251 12367345 <br>
+    <strong>Fax :</strong> +251 12364588<br>
+    <strong>E-mail :</strong> classbooking@yahoo.com</span> </span></td><br><br>
+	Copyright &copy 2018 IT MSc 1<sup>st</sup>  year student Computing Solutions PLC. All Rights Reserved!! </span>
+	</center></div>
+<style>
+          #sd{
+     margin-top: 50%
+     
+            }
+            #sd{
+                background-color: khaki;
+            }  
+        </style>

@@ -15,8 +15,8 @@
     <body>
   <img src="animate.gif"/>
   <h1>
-      <meta http-equiv="refresh" content="2;url=index.html">
-      <h1>Logging Out........</h1>
+      <meta http-equiv="refresh" content="2;url=request.jsp">
+      <h1>Logging in........</h1>
       
     </body>
 </html>

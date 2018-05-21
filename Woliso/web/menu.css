@@ -1,0 +1,60 @@
+.gurtl0onorm {
+	padding: 4px;
+	font: 11px Verdana, Arial, Tahoma, Geneva, Helvetica, sans-serif;
+	text-decoration: none;
+	border: 1px solid #5E8383;
+	border-left: 4px solid #5E8383;
+	background: #5E8383;
+	color: white;
+	cursor: hand;
+}
+.gurtl0oover {
+	padding: 4px;
+	font: 11px Arial, Tahoma, Verdana, Geneva, Helvetica, sans-serif;
+	text-decoration: none;
+	border: 1px solid #A4A4A4;
+	border-left: 4px solid #E1B700;
+	background: #A4A4A4;
+	color: white;
+	cursor: hand;
+}
+.gurtl0oclck {
+	padding: 4px;
+	font: 11px Arial, Tahoma, Verdana, Geneva, Helvetica, sans-serif;
+	text-decoration: none;
+	border: 1px solid #A4A4A4;
+	border-left: 4px solid #5E8383;
+	background: #949494;
+	color: white;
+	cursor: hand;
+}
+.gurtl1onorm {
+	padding: 3px;
+	font: 11px Arial, Tahoma, Verdana, Geneva, Helvetica, sans-serif;
+	text-decoration: none;
+	border: 1px solid white;
+	border-left: 4px solid #EBEFEF;
+	background: #EBEFEF;
+	color: #243D4B;
+	cursor: hand;
+}
+.gurtl1oover {
+	padding: 3px;
+	font: 11px Arial, Tahoma, Verdana, Geneva, Helvetica, sans-serif;
+	text-decoration: none;
+	border: 1px solid white;
+	border-left: 4px solid #E1B700;
+	background: #EBEFEF;
+	color: #243D4B;
+	cursor: hand;
+}
+.gurtl1oclck {
+	padding: 3px;
+	font: 11px Arial, Tahoma, Verdana, Geneva, Helvetica, sans-serif;
+	text-decoration: none;
+	border: 1px solid white;
+	border-left: 4px solid #E1B700;
+	background: #DBDFDF;
+	color: #243D4B;
+	cursor: hand;
+}

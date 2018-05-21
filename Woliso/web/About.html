@@ -1,0 +1,96 @@
+<html>
+<head>
+	<title>online ambo University class booking system</title>
+	<link href="menu.css" rel=stylesheet>
+	<script language=JavaScript src="scripts/menu.js"></script>
+	<script language=JavaScript src="scripts/menu_hier.js"></script>
+	<script language="JavaScript" src = "scripts/myscript.js"></script>
+	<script language="JavaScript" type="text/javascript" 	src="scripts/sidebar.js"></script>	
+<style type="text/css">
+<!--
+.style15 {
+	color: #990033;
+	font-weight: bold;
+	font-size: 18px;
+}
+.style16 {font-size: 10px}
+-->
+</style>
+
+	<script language="JavaScript">
+var imageArray = new Array()
+imageArray[0] = new Image(); imageArray[0].src = "images/bed (1).jpg";
+imageArray[1] = new Image(); imageArray[1].src = "images/bed (2).jpg";
+imageArray[2] = new Image(); imageArray[2].src = "images/bed (3).jpg";
+imageArray[3] = new Image(); imageArray[3].src = "images/bed (4).jpg";
+imageArray[4] = new Image(); imageArray[4].src = "images/bed (5).jpg";
+
+var imageNum = 0;
+var finished = 0;
+var intervalID = "";
+
+function startTransition()
+{
+  window.clearInterval(intervalID);
+
+  if(finished == 0)
+  {
+    if(imageNum == imageArray.length) { imageNum = 0; }
+
+    transImage.filters.item(0).Apply();
+    transImage.src = imageArray[imageNum].src;
+    transImage.filters.item(0).Play();
+   finished = 1
+  }
+
+  intervalID = window.setInterval("startTransition()", 5000);
+}
+</script>
+
+<script for="transImage" event="onfilterchange">
+finished = 0;
+imageNum += 1;
+</script>
+<script for="transImage2" event="onfilterchange">
+</script>
+</head>
+<body >
+<BODY background="pho/11.jpg") onload = "startTransition()">
+<img src="images/ambo1.JPG" name="image1" width="100%" height="30%"><br><br><br><br><br>
+	<table background="images/cream_back.gif" border="0" cellpadding="0" cellspacing="0" align="center">
+		<tr>
+		<td colspan="3"><img src="pho/cc.jpg" width="437"></td>
+		<td colspan="3"><img src="pho/d.png" width="437" height="100%"></td>
+		</tr>
+	</table>
+	<table bgcolor="#99cccc" border="0" cellpadding="0" cellspacing="0" align="center" width="875">
+		<tr>
+			<td height="35" colspan="3" align="center"><p bgcolor="yellow">Ambo University woliso campus is a higher education organization which 
+			is found in woliso town. <br>
+			The organization is part of the federal administration. The organization found in woliso Town<br>   </p>
+</strong></p>				</td><td></td>
+	    </tr>
+		
+	
+	  <tr>
+	  <style>
+	  #sd{
+	  background-color:pink;
+	  margin-left:30%;
+	  margin-right:30%;
+	  }
+	  </style>
+</table><br><br><br><div id="sd">
+<center>Ambo,Ethiopia </span><span class="style8"><br>
+    <strong>Po.Box :</strong>123<br>
+    <strong>Tel :</strong> +251 12367345 <br>
+    <strong>Fax :</strong> +251 12364588<br>
+    <strong>E-mail :</strong> electric.billing@yahoo.com</span> </span></td><br><br>
+	Copyright &copy 2016 IT 4<sup>th</sup> year student Computing Solutions PLC. All Rights Reserved!! </span>
+	</center></div>
+	
+		
+	
+</body>
+</html>
+

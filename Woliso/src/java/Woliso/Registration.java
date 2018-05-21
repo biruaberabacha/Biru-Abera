@@ -27,7 +27,7 @@ Statement stmt=null;
 	 con=DriverManager.getConnection(mysqlconnector,"root","");
 	 stmt=con.createStatement();
     stmt.execute("INSERT into room values('"+v2+"','"+v3+"','"+v4+"','"+v5+"','"+v1+"')");
-        stmt.execute("INSERT into room_assign values('"+v1+"','"+v6+"','"+v7+"','"+v8+"','"+v9+"','"+"Null"+"')");
+        
  
 
 String sql2="update value set ID="+"'"+id+"' where ID="+"'"+z+"'";
@@ -69,12 +69,47 @@ String name=null;
         stmt.execute("DELETE FROM `room_assign` WHERE Room_ID='"+RID+"' AND Date='"+Dates+"' AND Start_time='"+startTime+"' AND End_time='"+endTime+"' AND Status='Occupied'");
         
     }
-    public void conection() throws ClassNotFoundException, SQLException{
-      
-    String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
-               Class.forName("com.mysql.jdbc.Driver");
+    public void ChangePassword(String ID,String Password) throws ClassNotFoundException, SQLException{
+   String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
+Connection con=null;
+Statement stmt=null;
+String name=null;
+//Date d=new Date();
+//out.println(d);
+	 Class.forName("com.mysql.jdbc.Driver");
+	 con=DriverManager.getConnection(mysqlconnector,"root","");
+	 stmt=con.createStatement();
+    
+        
+       String sql2="update login set Password="+"'"+Password+"' where ID="+"'"+ID+"'";
+        stmt.execute(sql2);        
+   
 	
-}        
+}   
+    public void connection() throws ClassNotFoundException, SQLException{
+        String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
+ Connection con=null;
+Statement stmt=null;	
+            Class.forName("com.mysql.jdbc.Driver");    
+	 con=(Connection) DriverManager.getConnection(mysqlconnector,"root","");
+    }
+    
+    public void comment(String Fname,String Lname,String Email,String Country,String comment,String date) throws ClassNotFoundException, SQLException
+    {
+        String mysqlconnector="jdbc:mysql://localhost:3306/woliso";
+Connection con=null;
+Statement stmt=null;
+String name=null;
+//Date d=new Date();
+//out.println(d);
+	 Class.forName("com.mysql.jdbc.Driver");
+	 con=DriverManager.getConnection(mysqlconnector,"root","");
+	 stmt=con.createStatement();
+    
+        
+        stmt.execute("INSERT into  comment values('"+Fname+"','"+Lname+"','"+Email+"','"+Country+"','"+comment+"','"+date+"')");
+       
+    }
     }
     
 
